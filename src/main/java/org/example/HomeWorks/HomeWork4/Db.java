@@ -2,33 +2,29 @@ package org.example.HomeWorks.HomeWork4;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 public class Db {
 
-    public static void con() {
-        try (StandardServiceRegistry standardServiceRegistry = new StandardServiceRegistryBuilder()
+    public static void connection() {
+        try (SessionFactory sessionFactory = new Configuration()
                 .configure("hibernate.cfg.xml")
-                .build()) {
-            try (SessionFactory sessionFactory = new MetadataSources(standardServiceRegistry)
-                    .buildMetadata()
-                    .buildSessionFactory()) {
-                try (Session session = sessionFactory.openSession()) {
+                .addAnnotatedClass(Person.class)
+                .buildSessionFactory()) {
 
-                    Person person1 = new Person("Nikolay", 16);
-                    Person person2 = new Person("Dmitry", 17);
-                    Person person3 = new Person("Andrey", 18);
+            Session session = sessionFactory.getCurrentSession();
 
-                    session.beginTransaction();
-                    session.save(person1);
-                    session.save(person2);
-                    session.save(person3);
-                    session.getTransaction().commit();
+            Person person1 = new Person("Nikolay", 16);
+            Person person2 = new Person("Dmitry", 16);
+            Person person3 = new Person("Alexander", 22);
 
-                }
-            }
+            session.beginTransaction();
+            session.save(person1);
+            session.save(person2);
+            session.save(person3);
+            session.getTransaction().commit();
+
         }
     }
 

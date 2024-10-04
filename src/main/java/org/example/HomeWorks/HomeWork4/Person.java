@@ -1,23 +1,22 @@
 package org.example.HomeWorks.HomeWork4;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
-// Задание: Настройте связь между вашим приложением и базой данных MySQL с использованием Hibernate. Создайте несколько объектов Person и сохраните их в базу данных.
 @Entity
-@Table(name = "People")
+@Table(name = "people")
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "age")
     private int age;
 
-    public Person(String name, int age) {
+    Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
